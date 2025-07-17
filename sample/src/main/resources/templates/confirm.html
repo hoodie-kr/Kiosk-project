@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>결제 확인</title>
+</head>
+<body>
+  <h2>주문 내역 확인</h2>
+  <table>
+    <tr><th>상품</th><th>수량</th><th>금액</th></tr>
+    <tr th:each="item : ${cart}">
+      <td th:text="${item.name}"></td>
+      <td th:text="${item.quantity}"></td>
+      <td th:text="${item.price * item.quantity} + '원'"></td>
+    </tr>
+  </table>
+  <p>총 금액: <span th:text="${total} + '원'"></span></p>
+  <button>카드 결제</button>
+  <button>현금 결제</button>
+</body>
+</html>

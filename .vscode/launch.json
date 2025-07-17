@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "kioskApplication",
+            "request": "launch",
+            "mainClass": "com.aloha.kiosk.kioskApplication",
+            "projectName": "sample"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SampleApplication<sample>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.aloha.sample.SampleApplication",
+            "projectName": "sample",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -4,11 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.aloha.kiosk.mapper.RamenMapper">
-    <select id="findAll" resultType="com.aloha.kiosk.dto.Ramen">
+
+    <select id="findAll" resultType="com.aloha.kiosk.dto.RamenDTO">
         SELECT * FROM ramen
     </select>
 
-    <select id="findByCategory" resultType="com.aloha.kiosk.dto.Ramen" parameterType="String">
-        SELECT * FROM ramen WHERE category = #{category}
+    <select id="findById" resultType="com.aloha.kiosk.dto.RamenDTO" parameterType="int">
+        SELECT * FROM ramen WHERE id = #{id}
     </select>
+
 </mapper>
