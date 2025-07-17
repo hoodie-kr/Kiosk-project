@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 페이지</title>
+    <style>
+        body {
+            font-family: 'Arial';
+            text-align: center;
+            padding: 40px;
+        }
+        .category-buttons button {
+            width: 100px;
+            height: 40px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .pagination, .order-summary {
+            margin-top: 20px;
+        }
+        .order-buttons {
+            margin-top: 20px;
+        }
+        .order-buttons button {
+            width: 120px;
+            height: 50px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="category-buttons">
+        <button style="background:red; color:white;">라면1번</button>
+        <button>라면2번</button>
+        <button>라면3번</button>
+    </div>
+
+    <div class="product-grid">
+        <!-- 상품 자리 (임시용) -->
+        <div>🍜</div>
+        <div>🍜</div>
+        <div>🍜</div>
+        <div>🍜</div>
+        <div>🍜</div>
+        <div>🍜</div>
+    </div>
+
+    <div class="pagination">
+        <button>&lt;</button>
+        <span>● ○ ○ ○</span>
+        <button>&gt;</button>
+    </div>
+
+    <div class="order-summary">
+        <h4>선택메뉴</h4>
+        주문수량: <input type="number" value="1" min="1"><br>
+        주문금액: <span>₩3,000</span>
+    </div>
+
+    <div class="order-buttons">
+        <button style="background:red; color:white;">현금결제</button>
+        <button style="background:blue; color:white;">카드결제</button>
+    </div>
+</body>
+</html>

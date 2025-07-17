@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aloha.kiosk.mapper.RamenMapper">
+    <select id="findAll" resultType="com.aloha.kiosk.dto.Ramen">
+        SELECT * FROM ramen
+    </select>
+
+    <select id="findByCategory" resultType="com.aloha.kiosk.dto.Ramen" parameterType="String">
+        SELECT * FROM ramen WHERE category = #{category}
+    </select>
+</mapper>

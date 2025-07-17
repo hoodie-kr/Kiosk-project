@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>컵라면 자판기</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      background-color: #87CEEB; /* 💙 예쁜 하늘색 */
+    }
+
+    .container {
+      text-align: center;
+      border: 2px solid #ddd;
+      padding: 40px 30px;
+      border-radius: 10px;
+      width: 600px;
+      height: 800px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+    }
+
+    p {
+      font-size: 1.4rem;
+      margin: 20px 0;
+    }
+
+    button {
+      font-size: 2rem;
+      padding: 30px 90px;
+      background-color: #ffd600;
+      border: 2px solid #000;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #ffcc00;
+    }
+
+    /* ⭐ 오늘의 라면 슬라이드 영역 */
+    .ramen-carousel {
+      margin: 30px 0;
+    }
+
+    .ramen-carousel h3 {
+      font-size: 1.5rem;
+      margin-bottom: 55px;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 30px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .carousel-track img {
+      width: 220px;
+      height: 250px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>컵라면 자판기</h2>
+
+    <!-- 🟦 오늘의 라면 슬라이드 -->
+    <div class="ramen-carousel">
+      <h3>🍜 오늘의 라면</h3>
+      <div class="carousel-track">
+        <img src="../static/img/ramen1.png" alt="라면1">
+        <img src="../static/img/ramen2.png" alt="라면2">
+        <img src="../static/img/ramen3.png" alt="라면3">
+        <img src="../static/img/ramen4.png" alt="라면4">
+      </div>
+    </div>
+
+    <p>간편하게 이용해보세요</p>
+    <p>Order Here</p>
+    <button onclick="location.href='/order'">주문</button>
+  </div>
+</body>
+</html>
+<script>
+  let scrollContainer = null;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    scrollContainer = document.querySelector('.carousel-track');
+    let scrollAmount = 0;
+    const slideTimer = setInterval(() => {
+      if (scrollContainer) {
+        scrollAmount += 1;
+        scrollContainer.scrollLeft = scrollAmount;
+
+        // 슬라이드가 끝까지 가면 다시 처음으로
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+          scrollAmount = 0;
+        }
+      }
+    }, 30); // 숫자를 낮추면 더 빠르게 슬라이딩
+  });
+</script>
