@@ -1,72 +1,178 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>주문 페이지</title>
-    <style>
-        body {
-            font-family: 'Arial';
-            text-align: center;
-            padding: 40px;
-        }
-        .category-buttons button {
-            width: 100px;
-            height: 40px;
-            margin: 5px;
-            font-size: 16px;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .pagination, .order-summary {
-            margin-top: 20px;
-        }
-        .order-buttons {
-            margin-top: 20px;
-        }
-        .order-buttons button {
-            width: 120px;
-            height: 50px;
-            font-size: 16px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>라면 주문</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      background-color: #87CEEB;
+    }
+
+    .container {
+      text-align: center;
+      border: 2px solid #ddd;
+      padding: 40px 30px;
+      border-radius: 10px;
+      width: 600px;
+      height: 900px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .category-buttons button {
+      width: 140px;
+      height: 50px;
+      margin: 10px;
+      font-size: 1.1rem;
+      border: 2px solid #000;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .category-buttons button:first-child {
+      background-color: #ff4444;
+      color: #fff;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .product-item {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+
+    .product-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
+    .pagination {
+      margin: 20px 0;
+    }
+
+    .order-summary {
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+
+    .order-buttons {
+      margin-top: 20px;
+    }
+
+    .order-buttons button {
+      font-size: 1.2rem;
+      padding: 15px 30px;
+      border: 2px solid #000;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .order-buttons button:first-child {
+      background-color: #ff4444;
+      color: #fff;
+    }
+
+    .order-buttons button:last-child {
+      background-color: #007BFF;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h2>🍜 라면 주문</h2>
+
     <div class="category-buttons">
-        <button style="background:red; color:white;">라면1번</button>
-        <button>라면2번</button>
-        <button>라면3번</button>
+      <button>국물라면</button>
+      <button>볶음라면</button>
+      <button>퓨전라면</button>
     </div>
 
-    <div class="product-grid">
-        <!-- 상품 자리 (임시용) -->
-        <div>🍜</div>
-        <div>🍜</div>
-        <div>🍜</div>
-        <div>🍜</div>
-        <div>🍜</div>
-        <div>🍜</div>
+    <div class="product-grid" id="productGrid">
+      <!-- JS로 동적 생성 -->
     </div>
 
     <div class="pagination">
-        <button>&lt;</button>
-        <span>● ○ ○ ○</span>
-        <button>&gt;</button>
+      <button>&lt;</button>
+      <span>● ○ ○ ○</span>
+      <button>&gt;</button>
     </div>
 
     <div class="order-summary">
-        <h4>선택메뉴</h4>
-        주문수량: <input type="number" value="1" min="1"><br>
-        주문금액: <span>₩3,000</span>
+      <h4>주문내역</h4>
+      주문수량: <span id="orderCount">0</span><br><br>
+      주문금액: <span id="orderTotal">₩0</span>
     </div>
 
     <div class="order-buttons">
-        <button style="background:red; color:white;">현금결제</button>
-        <button style="background:blue; color:white;">카드결제</button>
+      <button onclick="resetOrder()">전체취소</button>
+      <button>카드 결제</button>
     </div>
+  </div>
+
+  <script>
+    const products = [
+      { name: "오모리 김치찌개", price: 1700, img: "../static/img/ramen5.png" },
+      { name: "열라면", price: 1200, img: "../static/img/ramen6.png" },
+      { name: "진라면(매운맛)", price: 1100, img: "../static/img/ramen7.png" },
+      { name: "참깨라면", price: 1300, img: "../static/img/ramen8.png" },
+      { name: "진라면(순한맛)", price: 1100, img: "../static/img/ramen9.png" },
+      { name: "신라면", price: 1500, img: "../static/img/ramen10.png" }
+    ];
+
+    let orderCount = 0;
+    let orderTotal = 0;
+
+    const productGrid = document.getElementById("productGrid");
+    const orderCountSpan = document.getElementById("orderCount");
+    const orderTotalSpan = document.getElementById("orderTotal");
+
+    products.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "product-item";
+      div.innerHTML = `
+        <img src="${p.img}" alt="${p.name}">
+        <p>${p.name}</p>
+        <p>₩${p.price.toLocaleString()}</p>
+      `;
+      div.onclick = () => {
+        orderCount += 1;
+        orderTotal += p.price;
+        orderCountSpan.innerText = orderCount;
+        orderTotalSpan.innerText = `₩${orderTotal.toLocaleString()}`;
+      };
+      productGrid.appendChild(div);
+    });
+
+    function resetOrder() {
+      orderCount = 0;
+      orderTotal = 0;
+      orderCountSpan.innerText = 0;
+      orderTotalSpan.innerText = "₩0";
+    }
+  </script>
 </body>
 </html>
